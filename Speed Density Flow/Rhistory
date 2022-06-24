@@ -1,0 +1,339 @@
+setwd("D:/Documents 2/MUK Masters/Research/MUK Masters Research/Masters Research/TOPIC 4/Methodology/Data Analysis/Raymond Anova Analysis 28.04.2021")
+setwd("D:/Documents 2/MUK Masters/Research/MUK Masters Research/Masters Research/TOPIC 4/Methodology/Data Analysis/Raymond Anova Analysis 28.04.2021")
+library(readxl)
+Speed_Density_Flow <- read_excel("Speed Density Flow.xlsx",
+sheet = "Bombo-Clean")
+View(Speed_Density_Flow)
+Bombo <- read_excel("Speed Density Flow.xlsx",
+sheet = "Bombo-Clean")
+View(Bombo)
+lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Flow (peds/m/min)`)
+summary(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Flow (peds/m/min)`))
+install.packages("ggplot2")
+library(ggplot2)
+ggplot(data = Bombo)+
+geom_point(aes(x=`Pedestrian Flow (peds/m/min)`, y=`(Mean Speed m/min)`))
+ggplot(data = Bombo)+
+geom_point(aes(x=`Pedestrian Flow (peds/m/min)`, y=`Pedestrian Density (Peds/m2) b`))
+ggplot(data = Bombo)+
+geom_point(aes(x=`(Mean Speed m/min)`, y=`Pedestrian Density (Peds/m2) b`))
+ggplot(data = Bombo)+
+geom_point(aes(y=`(Mean Speed m/min)`, x=`Pedestrian Density (Peds/m2) b`))
+ggplot(data = Bombo)+
+geom_point(aes(y=`(Mean Speed m/min)`, x=scale(`Pedestrian Density (Peds/m2) b`)))
+ggplot(data = Bombo)+
+geom_point(aes(y=`(Mean Speed m/min)`, x=`Pedestrian Density (Peds/m2) b`))
+ggplot(data = Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='blue') +
+geom_smooth(method = "lm", se = FALSE)
+ggplot(data = Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black') +
+geom_smooth(method = "lm", se = FALSE, color="red")
+ggplot(data = Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black') +
+geom_smooth(method = "lm", se = FALSE, color="black")
+ggplot(data = Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black') +
+geom_smooth(method = "lm", se = FALSE, color="black", formula= y~x)
+summary(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+Bombo <- read_excel("Speed Density Flow.xlsx",
+sheet = "Bombo-Clean")
+library(ggplot2)
+ggplot(data = Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black') +
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)
+summary(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+View(Bombo)
+Entebbe <- read_excel("Speed Density Flow.xlsx",
+sheet = "Entebbe-Clean")
+View(Entebbe)
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black') +
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)
+summary(lm(data = Entebbe, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(lm(data = Entebbe, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+View(Entebbe)
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')=labs(title = "Entebbe")+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+labs(title = "Entebbe")+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+ggtitle("Entebbe")+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+ggtitle("Entebbe")+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+labs(title="Entebbe")+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
++ theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+labs(title="Entebbe")+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
++labs(title="Entebbe")+
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
+labs(title="Entebbe")+
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black') +
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
+labs(title="Bombo")+
+theme(plot.title = element_text(hjust = 0.5))
+Hoima <- read_excel("Speed Density Flow.xlsx",
+sheet = "Hoima-Clean")
+ggplot(data = Hoima, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
+labs(title="Hoima")+
+theme(plot.title = element_text(hjust = 0.5))
+summary(lm(data = Entebbe, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(lm(data = Hoima, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+199.34/0.560
+111.633/0.560
+Jinja <- read_excel("Speed Density Flow.xlsx",
+sheet = "Jinja-Clean")
+ggplot(data = Jinja, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
+labs(title="Jinja")+
+theme(plot.title = element_text(hjust = 0.5))
+summary(lm(data = Jinja, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+Combined = rbind(Bombo, Entebbe, Hoima, Jinja)
+View(Combined)
+ggplot(data = Combined, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
+labs(title="Combined")+
+theme(plot.title = element_text(hjust = 0.5))
+summary(lm(data = Combined, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(lm(data = Combined, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(lm(data = Jinja, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Combined, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Combined, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Entebbe, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Hoima, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Jinja, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Combined, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`), level = .95)
+confint(lm(data = Combined, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`), level = .95)
+summary(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(lm(data = Jinja, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(lm(data = Entebbe, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(lm(data = Hoima, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+View(Entebbe)
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = TRUE, color="black", formula = y~x)+
+labs(title="Entebbe")+
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = Hoima, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = TRUE, color="black", formula = y~x)+
+labs(title="Hoima")+
+theme(plot.title = element_text(hjust = 0.5))
+confint(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`), level = .95)
+confint(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`), level = .95)
+confint(lm(data = Entebbe, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Hoima, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Jinja, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+confint(lm(data = Combined, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`), level = .95)
+plot(residuals(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`)))
+plot(residuals(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`)),
+main = "Residuals Bombo")
+plot(residuals(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`)),
+main = "Residuals Bombo", xlab = "Standardized Residuals")
+plot(residuals(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`)),
+main = "Residuals Bombo", ylab = "Standardized Residuals")
+ggplot(data = Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black') +
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
+labs(title="Bombo")+
+theme(plot.title = element_text(hjust = 0.5))
+install.packages("ggfortify")
+library(ggfortify)
+ggfortify::autoplot(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+autoplot(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+plot(residuals(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`)),
+main = "Residuals Bombo", ylab = "Standardized Residuals")
+fortify(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+plot(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`), which = 1)
+plot(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`), which = 1,
+xlab = "Fitted Values")
+summary(Bombo_lm <- lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(Entebbe_lm <-lm(data = Entebbe, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(Hoima_lm <-lm(data = Hoima, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(Jinja_lm <-lm(data = Jinja, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+ggplot(Bombo_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE)
+plot(lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`), which = 1)
+plot(Bombo_lm, which = 1, color="black")
+plot(Bombo_lm, which = 1, col="black")
+plot(Bombo_lm, which = 1)
+ggplot(Bombo_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE, colour = "black")
+ggplot(Bombo_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Bombo")
+ggplot(Bombo_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Bombo") +
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(Entebbe_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Bombo") +
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(Bombo_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Bombo") +
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(Bombo_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Bombo") +
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(Entebbe_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Bombo") +
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(Jinja_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Jinja") +
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(Hoima_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Hoima") +
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(Jinja_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Jinja") +
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(Entebbe_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Entebbe") +
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(Bombo_lm, aes(.fitted, .resid)) +
+geom_point() +
+geom_hline(yintercept = 0) +
+geom_smooth(se = FALSE) +
+labs(title = "Residual Vs Fitted Values Bombo") +
+theme(plot.title = element_text(hjust = 0.5))
+summary(Bombo_lm <- lm(data = Bombo, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(Entebbe_lm <-lm(data = Entebbe, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(Hoima_lm <-lm(data = Hoima, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(Jinja_lm <-lm(data = Jinja, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+install.packages("lmtest")
+library(lmtest)
+bptest(Entebbe_lm)
+Entebbe_Reduced <- read_excel("Speed Density Flow.xlsx",
+sheet = "Entebbe-Reduced")
+ggplot(data = Entebbe_Reduced, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = TRUE, color="black", formula = y~x)+
+labs(title="Entebbe_Reduced")+
+theme(plot.title = element_text(hjust = 0.5))
+summary(Entebbe_reduced_lm <-lm(data = Entebbe_Reduced,
+formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+summary(Entebbe_lm <-lm(data = Entebbe, formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_boxplot(outlier.colour="black", outlier.shape=16,
+outlier.size=2, notch=FALSE)+
+labs(title="Entebbe")+
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_boxplot(outlier.colour="red", outlier.shape=16,
+outlier.size=2, notch=FALSE)+
+labs(title="Entebbe")+
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_boxplot(outlier.colour="red", outlier.shape=8, outlier.size=4, notch=FALSE)+
+labs(title="Entebbe")+
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_boxplot(outlier.colour="red", outlier.shape=16, outlier.size=2, notch=FALSE)+
+labs(title="Entebbe")+
+theme(plot.title = element_text(hjust = 0.5))
+Entebbe_Reduced <- read_excel("Speed Density Flow.xlsx",
+sheet = "Entebbe-Reduced")
+ggplot(data = Entebbe_Reduced, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = TRUE, color="black", formula = y~x)+
+labs(title="Entebbe_Reduced")+
+theme(plot.title = element_text(hjust = 0.5))
+summary(Entebbe_reduced_lm <-lm(data = Entebbe_Reduced,
+formula = `(Mean Speed m/min)`~ `Pedestrian Density (Peds/m2) b`))
+install.packages("plotly")
+ggplotly(ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = TRUE, color="black", formula = y~x)+
+labs(title="Entebbe")+
+theme(plot.title = element_text(hjust = 0.5)))
+install.packages("ggplotlyExtra")
+library(ggplotlyExtra)
+ggplotly(ggplot(data = Entebbe, aes(x = `Pedestrian Density (Peds/m2) b`, y = `(Mean Speed m/min)`)) +
+geom_point(color='black')+
+geom_smooth(method = "lm", se = TRUE, color="black", formula = y~x)+
+labs(title="Entebbe")+
+theme(plot.title = element_text(hjust = 0.5)))
+## Split data into training data set and validation data set
+n=dim(Bombo)[1]
+set.seed(12345)
+id=sample(1:n, floor(n*0.8))
+train_Bombo = Bombo[id,]
+validation_Bombo = Bombo[-id,]
+View(train_Bombo)
+View(validation_Bombo)
+ggplot(data = train_Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `Pedestrian Flow (peds/m/min)`)) +
+geom_point(color='black') +
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
+labs(title="Training data set of Bombo")+
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = train_Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `Pedestrian Flow (peds/m/min)`)) +
+geom_point(color='black') +
+geom_smooth(method = "lm", se = FALSE, color="black", formula = y~x)+
+labs(title="Pedestrian Flow Vs Pedestrian Density Training data set of Bombo")+
+theme(plot.title = element_text(hjust = 0.5))
+ggplot(data = train_Bombo, aes(x = `Pedestrian Density (Peds/m2) b`, y = `Pedestrian Flow (peds/m/min)`)) +
+geom_point(color='black') +
+labs(title="Pedestrian Flow Vs Pedestrian Density Training data set of Bombo")+
+theme(plot.title = element_text(hjust = 0.5))
+View(Bombo)
+View(Bombo)
+summary(train_Bombo_lm <- lm(data = train_Bombo,
+formula = `Pedestrian Flow (peds/m/min)`~ `Pedestrian Density (Peds/m2) b`))
+predict_Bombo <- predict(train_Bombo_lm, newdata = validation_Bombo)
+View(validation_Bombo)
+id
