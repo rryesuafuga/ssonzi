@@ -1,0 +1,161 @@
+---
+title: "Master Thesis Round Four"
+author: "Patrick Sssonzi"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = FALSE, warning = FALSE)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+library(readxl)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(kableExtra)
+
+```
+
+
+# FLOW Vs SPEED + DENSITY
+
+
+# Sunday March 27th 2022
+```{r}
+
+Masters_Research_Final_for_Modelling = 
+  read_excel("Masters Research Final for Modelling.xls", 
+              sheet = "Only_Data")
+
+LOS_A = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "A") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_A, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_A, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_A, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+
+LOS_B = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "B") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_B, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_B, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_B, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+LOS_C = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "C") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_C, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_C, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_C, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+
+
+LOS_D = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "D") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_D, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_D, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_D, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+
+LOS_E = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "E") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_E, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_E, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_E, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+
+LOS_F = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "F") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_F, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_F, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_F, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+```

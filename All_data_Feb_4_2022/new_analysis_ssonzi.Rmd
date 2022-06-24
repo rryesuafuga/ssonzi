@@ -1,0 +1,403 @@
+---
+title: "Master Thesis Round Three"
+author: "Patrick Sssonzi"
+date: "`r Sys.Date()`"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error = FALSE, warning = FALSE)
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+library(readxl)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(kableExtra)
+
+```
+
+
+# FLOW Vs SPEED + DENSITY
+
+## Enter Data
+```{r, echo=TRUE}
+All_Data_new = read_excel("Final_Working_Data_File.xlsx", 
+                          sheet = "Big_Data_SPSS")
+
+
+```
+
+
+
+## Test normality of data
+```{r, echo=TRUE}
+hist(All_Data_new$`Mean Speed (m/min)`)
+
+qqnorm(All_Data_new$`Mean Speed (m/min)`, main='Mean Speed (m/min)')
+qqline(All_Data_new$`Mean Speed (m/min)`)
+
+
+```
+
+
+##### --- One-sample Kolmogorov-Smirnov test
+```{r, echo=FALSE}
+ks.test(All_Data_new$`Mean Speed (m/min)`, 'pnorm')
+ks.test(All_Data_new$`Pedestrian Density (Peds/m2)`, 'pnorm')
+ks.test(All_Data_new$`Pedestrian Flow (peds/m/min)`, 'pnorm')
+
+```
+
+
+#### --- Lilliefors (Kolmogorov-Smirnov) test for normality
+```{r, echo=FALSE}
+nortest::lillie.test(All_Data_new$`Mean Speed (m/min)`)
+nortest::lillie.test(All_Data_new$`Pedestrian Density (Peds/m2)`)
+nortest::lillie.test(All_Data_new$`Pedestrian Flow (peds/m/min)`)
+
+```
+
+
+#### --- Anderson-Darling test for normality
+```{r, echo=FALSE}
+nortest::ad.test(All_Data_new$`Mean Speed (m/min)`)
+nortest::ad.test(All_Data_new$`Pedestrian Density (Peds/m2)`)
+nortest::ad.test(All_Data_new$`Pedestrian Flow (peds/m/min)`)
+
+```
+
+
+#### --- Cramer-von Mises test for normality
+```{r, echo=FALSE}
+nortest::cvm.test(All_Data_new$`Mean Speed (m/min)`)
+nortest::cvm.test(All_Data_new$`Pedestrian Density (Peds/m2)`)
+nortest::cvm.test(All_Data_new$`Pedestrian Flow (peds/m/min)`)
+```
+
+
+#### --- Pearson chi-square test for normality
+```{r}
+nortest::pearson.test(All_Data_new$`Mean Speed (m/min)`)
+nortest::pearson.test(All_Data_new$`Pedestrian Density (Peds/m2)`)
+nortest::pearson.test(All_Data_new$`Pedestrian Flow (peds/m/min)`)
+
+```
+
+
+\newpage
+
+## ---- Run ANOVA or non-parametric alternative
+
+### TWO WAY ANOVA WITHOUT INTERACTION EFFECTS
+```{r, echo=TRUE}
+anova_without_interactions <- aov(`Mean Speed (m/min)` ~ Location +
+                                   Time + Sex, 
+                                   data = All_Data_new)
+summary(anova_without_interactions)
+
+hist(residuals(anova_without_interactions))
+nortest::ad.test(residuals(anova_without_interactions))
+
+```
+
+We can see clearly that the data is **NOT normally distributed.**
+
+
+### TWO WAY ANOVA WITH INTERACTION EFFECTS
+```{r, echo=TRUE}
+anova_with_interactions <- aov(`Mean Speed (m/min)` ~ Location + Time 
+                               + Sex + Location:Time + Location:Sex +
+                                 Time:Sex, 
+                                  data = All_Data_new)
+
+summary(anova_with_interactions)
+
+```
+
+
+### ---- Check ANOVA assumptions: test validity?
+
+#### 1. Check the homogeneity of variance assumption
+```{r}
+plot(anova_without_interactions, 1)
+
+```
+
+
+#### Use the Levene's test to check the homogeneity of variances.
+```{r}
+library(car)
+car::leveneTest(`Mean Speed (m/min)` ~ Location * Time * Sex, 
+                data = All_Data_new)
+
+```
+
+
+### 2. Check the normality assumption
+
+### Normality plot of the residuals Q-Q plot
+```{r}
+plot(anova_without_interactions, 2)
+
+```
+
+### cross-check with Anderson-Darling test test about normality
+```{r}
+nortest::ad.test(residuals(anova_without_interactions) )
+
+```
+
+
+
+## Split data into training data set and validation data set
+```{r}
+n=dim(All_Data_new)[1]
+set.seed(12345)
+id=sample(1:n, floor(n*0.8))
+All_Data_new_train = All_Data_new[id,]
+All_Data_new_validation = All_Data_new[-id,]
+
+```
+
+
+## 2D graph
+
+```{r}
+ggplot(data = All_Data_new_train, 
+       aes(x = `Pedestrian Density (Peds/m2)`, 
+           y = `Pedestrian Flow (peds/m/min)`)) + 
+  geom_point(color='red') +
+  geom_smooth(method = "lm", se = TRUE, color="black", 
+              formula = y ~ poly(x, 2, raw = T))+
+  labs(title="All data: Pedestrain Flow Vs Pedestrian Density")+
+  theme(plot.title = element_text(hjust = 0.5, size = 10))+
+  theme(axis.title.x = element_text(size = 8))+
+  theme(axis.title.y = element_text(size = 8))+
+  theme(panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(),
+        panel.background = element_blank(), 
+        axis.line = element_line(colour = "black"))
+
+```
+
+
+## -- three dimensional models
+
+##### with intercept included and linear model
+```{r}
+
+summary(All_Data_new_unknown <- 
+          lm(data = All_Data_new_train, 
+             formula = `Pedestrian Flow (peds/m/min)`  ~ 
+               `Pedestrian Density (Peds/m2)` +
+               `Mean Speed (m/min)` ))
+
+```
+
+
+##### with intercept removed and linear model
+```{r}
+
+summary(All_Data_new_unknown <- 
+          lm(data = All_Data_new_train, 
+             formula = `Pedestrian Flow (peds/m/min)`  ~ 
+               0 + `Pedestrian Density (Peds/m2)` +
+                   `Mean Speed (m/min)` ))
+
+```
+
+
+##### with intercept removed and equation of an ellipse
+```{r}
+
+summary(All_Data_new_unknown <- 
+          lm(data = All_Data_new_train, 
+             formula = `Pedestrian Flow (peds/m/min)`  ~ 
+               0 + (`Pedestrian Density (Peds/m2)`)^2 +
+               (`Mean Speed (m/min)`)^2 ))
+
+```
+
+
+##### with intercept removed and polynomial of degree 2
+```{r}
+
+summary(All_Data_new_unknown <- 
+          lm(data = All_Data_new_train, 
+             formula = `Pedestrian Flow (peds/m/min)`  ~ 
+               0 + poly(`Pedestrian Density (Peds/m2)`,2, raw = T) +
+               poly(`Mean Speed (m/min)`,2, raw = T)))
+
+```
+
+
+##### with intercept removed and polynomial of degree 2 and transformation
+```{r}
+
+summary(All_Data_new_unknown <- 
+          lm(data = All_Data_new_train, 
+          formula = `Pedestrian Flow (peds/m/min)`  ~ 
+          0 + poly(`Pedestrian Density (Peds/m2)`,2, raw = T) +
+          poly(1/(log10(`Mean Speed (m/min)`)),2, raw = T)))
+
+
+summary(All_Data_new_unknown <- 
+          lm(data = All_Data_new_train, 
+          formula = `Pedestrian Flow (peds/m/min)`  ~ 
+          0 + poly(`Pedestrian Density (Peds/m2)`,2, raw = T) +
+          poly(1/(sqrt(`Mean Speed (m/min)`)),2, raw = T)))
+
+summary(All_Data_new_unknown <- 
+          lm(data = All_Data_new_train, 
+          formula = `Pedestrian Flow (peds/m/min)`  ~ 
+          0 + poly(1/(log10(`Pedestrian Density (Peds/m2)`)),2, raw = T) +
+          poly(1/(log10(`Mean Speed (m/min)`)),2, raw = T)))
+
+
+coefficients(All_Data_new_unknown)
+
+
+```
+
+\newpage
+
+
+# Sunday March 27th 2022
+```{r}
+
+Masters_Research_Final_for_Modelling = 
+  read_excel("Masters Research Final for Modelling.xls", 
+              sheet = "Only_Data")
+
+LOS_A = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "A") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_A, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_A, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_A, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+
+LOS_B = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "B") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_B, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_B, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_B, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+LOS_C = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "C") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_C, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_C, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_C, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+
+
+LOS_D = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "D") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_D, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_D, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_D, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+
+LOS_E = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "E") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_E, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_E, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_E, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+
+LOS_F = subset(Masters_Research_Final_for_Modelling,
+               subset = (LOS == "F") )
+
+
+summary(flow_model <- 
+          lm(data = LOS_F, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed) + log(Density) ) )
+
+
+summary(flow_model <- 
+          lm(data = LOS_F, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^(-1)) + log( Density^(-1) ) ) )
+
+summary(flow_model <- 
+          lm(data = LOS_F, 
+             formula = log(Flow)  ~ 
+               0 + log(Speed^2) + log( Density^2 ) ) )
+
+
+```
